@@ -4,10 +4,12 @@ import (
 	"fmt"
 
 	"github.com/desktop-go/src"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	fmt.Println("Hello there!")
+	godotenv.Load()
+	fmt.Println("Program starting")
 
 	src.StartApp()
 }
