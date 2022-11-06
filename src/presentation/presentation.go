@@ -10,7 +10,7 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 
-	"github.com/desktop-go/src/games/game_one"
+	"github.com/desktop-go/src/games/clicky"
 	"github.com/desktop-go/src/games/game_two"
 )
 
@@ -37,9 +37,9 @@ func (p *Presentation) Start() {
 
 func (p *Presentation) ShowMenu() {
 	fmt.Println("Showing")
-	gameOneButton := widget.NewButton("Play Game 1", func() { p.startG1() })
+	ClickyButton := widget.NewButton("Play Game 1", func() { p.startG1() })
 	gameTwoButton := widget.NewButton("Play Game 2", func() { p.startG2() })
-	content := container.New(layout.NewVBoxLayout(), gameOneButton, gameTwoButton)
+	content := container.New(layout.NewVBoxLayout(), ClickyButton, gameTwoButton)
 
 	header := canvas.NewText("Welcome!", color.Black)
 	centered := container.New(layout.NewHBoxLayout(), layout.NewSpacer(), header, layout.NewSpacer())
@@ -60,10 +60,10 @@ func (p *Presentation) CleanUp() {
 }
 
 func (p *Presentation) startG1() {
-	gameOne := game_one.NewGameOne()
-	p.currentPresenter = &game_one.GameOnePresenter{
+	Clicky := clicky.NewClicky()
+	p.currentPresenter = &clicky.ClickyPresenter{
 		Window:   p.window,
-		Game:     *gameOne,
+		Game:     *Clicky,
 		GoToMenu: p.goToMenu,
 		Done:     p.done,
 	}
