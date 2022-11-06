@@ -14,7 +14,7 @@ func StartApp() {
 	done := make(chan struct{})
 	a := app.New()
 	w := a.NewWindow("Hello World")
-	w.Resize(fyne.NewSize(500, 500))
+	w.Resize(fyne.NewSize(1000, 600))
 
 	presentation := presentation.NewPresentation(w, done)
 

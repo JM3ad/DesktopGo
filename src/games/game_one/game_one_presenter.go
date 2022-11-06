@@ -1,4 +1,4 @@
-package presentation
+package game_one
 
 import (
 	"fmt"
@@ -11,47 +11,47 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
-	"github.com/desktop-go/src/game"
 )
 
-type GameTwoPresenter struct {
-	window   fyne.Window
-	game     game.GameTwo
-	goToMenu func()
-	done     chan struct{}
+type GameOnePresenter struct {
+	Window   fyne.Window
+	Game     GameOne
+	GoToMenu func()
+	Done     chan struct{}
 }
 
-func (g *GameTwoPresenter) Present() {
+func (g *GameOnePresenter) Present() {
 	quitButton := widget.NewButton("Exit", g.ReturnToMenu)
 	toolbar := container.New(layout.NewHBoxLayout(), quitButton)
 
-	header := canvas.NewText(g.game.GetName(), color.Black)
+	header := canvas.NewText(g.Game.GetName(), color.Black)
 	headerBar := container.New(layout.NewHBoxLayout(), layout.NewSpacer(), header, layout.NewSpacer())
 
-	money := widget.NewLabel(strconv.Itoa(g.game.GetMoney()))
+	money := widget.NewLabel(strconv.Itoa(g.Game.GetMoney()))
 	display := container.New(layout.NewHBoxLayout(), layout.NewSpacer(), money, layout.NewSpacer())
 
-	g.window.SetContent(container.New(layout.NewVBoxLayout(), toolbar, layout.NewSpacer(), headerBar, layout.NewSpacer(), display))
+	g.Window.SetContent(container.New(layout.NewVBoxLayout(), toolbar, layout.NewSpacer(), headerBar, layout.NewSpacer(), display))
 	quit := g.updateScreen(money)
-	g.game.RunAsync(quit)
+	g.Game.RunAsync(quit)
 }
 
-func (g *GameTwoPresenter) ReturnToMenu() {
-	g.goToMenu()
+func (g *GameOnePresenter) ReturnToMenu() {
+	fmt.Println("Exit 1 hit")
+	g.GoToMenu()
 }
 
-func (g *GameTwoPresenter) updateScreen(money *widget.Label) chan struct{} {
+func (g *GameOnePresenter) updateScreen(money *widget.Label) chan struct{} {
 	ticker := time.NewTicker(time.Second / 2)
 	quit := make(chan struct{})
 	go func() {
 		for {
 			select {
 			case <-ticker.C:
-				money.SetText(strconv.Itoa(g.game.GetMoney()))
+				money.SetText(strconv.Itoa(g.Game.GetMoney()))
 			case <-quit:
 				ticker.Stop()
 				fmt.Println("Stopping the presentation")
-				g.done <- struct{}{}
+				g.Done <- struct{}{}
 				return
 			}
 		}
@@ -59,6 +59,7 @@ func (g *GameTwoPresenter) updateScreen(money *widget.Label) chan struct{} {
 	return quit
 }
 
-func (g *GameTwoPresenter) End() {
-	g.game.End()
+func (g *GameOnePresenter) End() {
+	fmt.Println("Ending presenter")
+	g.Game.End()
 }

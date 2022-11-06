@@ -10,7 +10,8 @@ import (
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 
-	"github.com/desktop-go/src/game"
+	"github.com/desktop-go/src/games/game_one"
+	"github.com/desktop-go/src/games/game_two"
 )
 
 type Presentation struct {
@@ -59,23 +60,23 @@ func (p *Presentation) CleanUp() {
 }
 
 func (p *Presentation) startG1() {
-	gameOne := game.NewGameOne()
-	p.currentPresenter = &GameOnePresenter{
-		window:   p.window,
-		game:     *gameOne,
-		goToMenu: p.goToMenu,
-		done:     p.done,
+	gameOne := game_one.NewGameOne()
+	p.currentPresenter = &game_one.GameOnePresenter{
+		Window:   p.window,
+		Game:     *gameOne,
+		GoToMenu: p.goToMenu,
+		Done:     p.done,
 	}
 	p.currentPresenter.Present()
 }
 
 func (p *Presentation) startG2() {
-	gameTwo := game.NewGameTwo()
-	p.currentPresenter = &GameTwoPresenter{
-		window:   p.window,
-		game:     *gameTwo,
-		goToMenu: p.goToMenu,
-		done:     p.done,
+	gameTwo := game_two.NewGameTwo()
+	p.currentPresenter = &game_two.GameTwoPresenter{
+		Window:   p.window,
+		Game:     *gameTwo,
+		GoToMenu: p.goToMenu,
+		Done:     p.done,
 	}
 	p.currentPresenter.Present()
 }

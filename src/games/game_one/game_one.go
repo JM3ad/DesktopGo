@@ -1,20 +1,20 @@
-package game
+package game_one
 
 import (
 	"fmt"
 	"time"
 )
 
-type GameTwo struct {
+type GameOne struct {
 	money int
 	quit  chan struct{}
 }
 
-func NewGameTwo() *GameTwo {
-	return &GameTwo{money: 0}
+func NewGameOne() *GameOne {
+	return &GameOne{money: 0}
 }
 
-func (g *GameTwo) RunAsync(done chan struct{}) {
+func (g *GameOne) RunAsync(done chan struct{}) {
 	ticker := time.NewTicker(2 * time.Second)
 	g.quit = make(chan struct{})
 	go func() {
@@ -33,18 +33,18 @@ func (g *GameTwo) RunAsync(done chan struct{}) {
 	}()
 }
 
-func (g *GameTwo) Update() {
-	g.money -= 1
+func (g *GameOne) Update() {
+	g.money += 1
 }
 
-func (g *GameTwo) GetMoney() int {
+func (g *GameOne) GetMoney() int {
 	return g.money
 }
 
-func (g *GameTwo) GetName() string {
-	return "Game 2"
+func (g *GameOne) GetName() string {
+	return "Game 1"
 }
 
-func (g *GameTwo) End() {
+func (g *GameOne) End() {
 	g.quit <- struct{}{}
 }
